@@ -22,13 +22,13 @@ class MyApp extends StatelessWidget {
       home: new MyHomePage(title: 'Flutter Swiper'),
       //home: buildHome(),
       routes: {
-        '/example01': (BuildContext context) => new ExampleHorizontal(),
+        '/example01': (BuildContext context) => new ExampleCustom(),
         '/example02': (BuildContext context) => new ExampleVertical(),
         '/example03': (BuildContext context) => new ExampleFraction(),
         '/example04': (BuildContext context) => new ExampleCustomPagination(),
         '/example05': (BuildContext context) => new ExamplePhone(),
-        '/example06': (BuildContext context) => new ScaffoldWidget(
-            child: new ExampleSwiperInScrollView(), title: "ScrollView"),
+        '/example06': (BuildContext context) =>
+            new ScaffoldWidget(child: new ExampleSwiperInScrollView(), title: "ScrollView"),
         '/example07': (BuildContext context) => new ScaffoldWidget(
               child: new ExampleCustom(),
               title: "Custom All",
@@ -56,8 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
         })).toList();
   }
 
-  Widget buildListTile(
-      BuildContext context, String title, String subtitle, String url) {
+  Widget buildListTile(BuildContext context, String title, String subtitle, String url) {
     return new ListTile(
       onTap: () {
         Navigator.of(context).pushNamed(url);
@@ -97,11 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-const List<String> titles = [
-  "Flutter Swiper is awosome",
-  "Really nice",
-  "Yeap"
-];
+const List<String> titles = ["Flutter Swiper is awosome", "Really nice", "Yeap"];
 
 class ExampleHorizontal extends StatelessWidget {
   @override
@@ -117,13 +112,40 @@ class ExampleHorizontal extends StatelessWidget {
               fit: BoxFit.fill,
             );
           },
-
           indicatorLayout: PageIndicatorLayout.COLOR,
           autoplay: true,
           itemCount: images.length,
           pagination: new SwiperPagination(),
           control: new SwiperControl(),
         ));
+  }
+}
+
+class ExampleCustom extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("ExampleHorizontal"),
+      ),
+      body: Swiper(
+        outer: true,
+        itemCount: 3,
+        itemBuilder: (context, index) {
+          return Container(
+            height: double.infinity,
+            child: Container(
+              width: 200,
+              height: 150,
+            ),
+          );
+        },
+        pagination: CustomSwiperPaginationBuilder(
+          activeImage: AssetImage("images/page-ative@3x.png"), 
+          inactiveImage: AssetImage("images/images/page-05@3x.png")
+        ),
+      ),
+    );
   }
 }
 
@@ -169,8 +191,7 @@ class ExampleFraction extends StatelessWidget {
               },
               autoplay: true,
               itemCount: images.length,
-              pagination:
-                  new SwiperPagination(builder: SwiperPagination.fraction),
+              pagination: new SwiperPagination(builder: SwiperPagination.fraction),
               control: new SwiperControl(),
             )),
             Expanded(
@@ -184,9 +205,7 @@ class ExampleFraction extends StatelessWidget {
               autoplay: true,
               itemCount: images.length,
               scrollDirection: Axis.vertical,
-              pagination: new SwiperPagination(
-                  alignment: Alignment.centerRight,
-                  builder: SwiperPagination.fraction),
+              pagination: new SwiperPagination(alignment: Alignment.centerRight, builder: SwiperPagination.fraction),
             ))
           ],
         ));
@@ -214,8 +233,7 @@ class ExampleCustomPagination extends StatelessWidget {
                 itemCount: images.length,
                 pagination: new SwiperPagination(
                     margin: new EdgeInsets.all(0.0),
-                    builder: new SwiperCustomPagination(builder:
-                        (BuildContext context, SwiperPluginConfig config) {
+                    builder: new SwiperCustomPagination(builder: (BuildContext context, SwiperPluginConfig config) {
                       return new ConstrainedBox(
                         child: new Container(
                             color: Colors.white,
@@ -241,8 +259,7 @@ class ExampleCustomPagination extends StatelessWidget {
                 itemCount: images.length,
                 pagination: new SwiperPagination(
                     margin: new EdgeInsets.all(0.0),
-                    builder: new SwiperCustomPagination(builder:
-                        (BuildContext context, SwiperPluginConfig config) {
+                    builder: new SwiperCustomPagination(builder: (BuildContext context, SwiperPluginConfig config) {
                       return new ConstrainedBox(
                         child: new Row(
                           children: <Widget>[
@@ -254,10 +271,7 @@ class ExampleCustomPagination extends StatelessWidget {
                               child: new Align(
                                 alignment: Alignment.centerRight,
                                 child: new DotSwiperPaginationBuilder(
-                                        color: Colors.black12,
-                                        activeColor: Colors.black,
-                                        size: 10.0,
-                                        activeSize: 20.0)
+                                        color: Colors.black12, activeColor: Colors.black, size: 10.0, activeSize: 20.0)
                                     .build(context, config),
                               ),
                             )
@@ -295,10 +309,7 @@ class ExamplePhone extends StatelessWidget {
             pagination: new SwiperPagination(
                 margin: new EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 30.0),
                 builder: new DotSwiperPaginationBuilder(
-                    color: Colors.white30,
-                    activeColor: Colors.white,
-                    size: 20.0,
-                    activeSize: 20.0)),
+                    color: Colors.white30, activeColor: Colors.white, size: 20.0, activeSize: 20.0)),
             children: <Widget>[
               new Image.asset(
                 "images/1.png",
