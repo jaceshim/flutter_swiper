@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-      ),
+    ),
       home: new MyHomePage(title: 'Flutter Swiper'),
       //home: buildHome(),
       routes: {
